@@ -1,0 +1,26 @@
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyd
+
+# Virtual Environments
+.venv/
+venv/
+env/
+ENV/
+
+# Output bundles and temporary files
+*.zip
+*.log
+.DS_Store
+Thumbs.db
+
+# Generated samples cache (keep folder, ignore generated test statements)
+sample_data/*.xlsx
+sample_data/*.pdf
+sample_data/*.xml
+
+# IDE
+.vscode/
+.idea/

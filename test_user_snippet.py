@@ -1,0 +1,88 @@
+import pandas as pd
+import json
+
+# Load the user's snippet into a DataFrame
+snippet_csv = """Credit,All,Col_2,Col_3,Col_4,Col_5,Col_6,Col_7,Col_8,Col_9,Col_10,Debit
+0,500,,,,,,,,,,0
+0,11/01/2026,,,,,,,,,,0
+0,01/12/2025,,,,,,,,,,0
+0,Custom,,,,,,,,,,0
+0,All,,,,,,,,,,0
+0,256,,,,,,,,,,0
+0,,,,,,,,,,,0
+0,,,,,,,,,,,0
+0,Transaction Description,Description,Description Extra,Reference,Remarks,Debit,Credit,Balance,203.0499999999993,ledger,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems لك الوفاء طرق عسفان,,114694141,,0,20000,20203.05,20203.05,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار فرع الوفاء,,101511619,,0,12300,32503.05,32503.05,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار فرع النزهة الستين,,106922167,,0,10000,55003.05,42503.05,,0
+0,SADAD Payment,153-EJAR-20552214394,سداد أيجار شاورما لك الوفاء,106903694,SD,32500,0,45003.05,10003.05,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار فرع الستين,,100350472,,0,45000,77503.05,55003.05,,0
+0,SADAD Payment,153-EJAR-20635897877,سداد إيجار فرع النزهة,114281798,SD,69000,0,3.05,-13996.95,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار الستين النزهة,ايجار فرع الستين النزهة,114230709,,0,14000,69003.05,3.05000000000291,,0
+0,Outgoing internal transfer,مصاريف تشغيل 20754004000107 BEN ID:1010002475 الشوقية محطة الايقونة,,114980045,,23000,0,0.05,-22996.95,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems ايجار الشوقية,,114968837,,0,997,23000.05,-21999.95,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار الشوقية,,114664974,,0,12000,22003.05,-9999.9499999999971,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems الشوقية مكة,,108014391,,0,10000,10003.05,0.050000000002910383,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems REnt Sharqiya Advance,,105754072,,0,6800,57800.05,6800.0500000000029,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Sharqiya,,105628561,,0,51000,51000.05,57800.05,,0
+0,Incoming internal transfer,BV:رواتب شهرية 75500002070902 DEP ID:4030600021 CHNL:SNB Payment Systems Rent Amana or Burger,,106360677,,0,6350,101700.05,64150.05,,0
+0,Incoming internal transfer,BV:رواتب شهرية 75500002078206 DEP ID:4030550072 CHNL:SNB Payment Systems salary to take cash,,106286349,,0,16550,95350.05,80700.05,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Sharqiya,,106148316,,0,8000,78800.05,88700.05,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Rent sharqiya,,106084595,,0,13000,70800.05,101700.05,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجارات,,110356669,,0,18000,128000.05,119700.05,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار الشرقية,,110300069,,0,8300,110000.05,128000.05,,0
+0,Outgoing internal transfer,مصاريف تشغيل 15563956000100 BEN ID:1011400619 الشرقية,,111062656,,130000,0,0.05,-1999.9499999999971,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems,,110990625,,0,2000,130000.05,0.050000000002910383,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار بترولي,لك,100585045,,0,10000,10000.05,10000.05,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems لك بترولي,,104603797,,0,10000,30000.05,20000.05,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار بترولي,,104324237,,0,10000,20000.05,30000.05,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems بترولي لك,,100896580,,0,10000,40000.05,40000.05,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems بترولي مكة,,104328795,,0,15000,55000.05,55000.05,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Petroly,,105789450,,0,13000,68000.05,68000.05,,0
+0,SADAD Payment,002-Saudi Electric Company-30127631480,,122756100,SD,13522.94,0,36606.02,54477.11,,0
+0,SADAD Payment,"020-Zakat, Tax and Customs Authority-3011092726253006",,122661026,SD,32869.94,0,50128.96,21607.17,,0
+0,VAT Charge,CITY:Digital Channel CITY:Digital Channel,,122597522,,0.15,0,82998.9,21607.02,,0
+0,Transfer Fees,CITY:Digital Channel,,122597522,9M,1,0,82999.05,21606.02,,0
+0,Outgoing IPS local transfer,شراء بضاعة إيجار 20250727SANCBKNCBK6B82411634767967 Charges:               1.00 REMBK:THE SAUDI NATIONAL BANK BENBK:AL RAJHI BANK SAUDI ARABIA رحيم عبدالرحيم المغربي,,122597522,JM,10000,0,83000.05,11606.02,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Petroly,,110935501,,0,20000,93000.05,31606.02,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems Petroly Rent,,110894262,,0,5000,73000.05,36606.02,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems فرع بترولي,,109437377,,0,20000,56606.02,56606.02,,0
+0,VAT Charge,CITY:Digital Channel CITY:Digital Channel,,109770844,,0.75,0,46600.27,56605.27,,0
+0,Transfer Fees,CITY:Digital Channel,,109770844,9M,5,0,46601.02,56600.27,,0
+0,Outgoing Local Transfer,CITY:Digital Channel  مصاريف تشغيل Operating Expenses NCBK82425210AUFT Charges:               5.00 REM ID:4030275376 Value Date:30/07/2025 RCODE:ACC/A001A005A003A004W001 OTBANK:RJHI شركة المسار الأول للتطوير والا,,109770844,EF,30000,0,46606.02,26600.27,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems Petroly Rent,,109686296,,0,6000,76606.02,32600.27,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار بترولي,,101182695,,0,14000,70606.02,46600.27,,0
+0,SADAD Payment,153-EJAR-20697768405,قلف,111724492,SD,14375,0,46451.27,32225.27,,0
+0,Incoming internal transfer,مصاريف تشغيل 01400012696005 DEP ID:4030410457 CHNL:SNB Payment Systems فرق الضريبة و الزكاة,,111599635,,0,46477,60826.27,78702.26999999999,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار بترولي,,111491828,,0,8000,14349.27,86702.26999999999,,0
+0,SADAD Payment,153-EJAR-20227572488,إيجار محطة الصفوة,111456218,SD,40251,0,6349.27,46451.26999999999,,0
+0,Incoming internal transfer,BV:رواتب شهرية 13300000291206 DEP ID:4030247122 CHNL:SNB Payment Systems Salary Balance,,111526372,,0,750,48326.27,47201.26999999999,,0
+0,Incoming internal transfer,01400000495305 DEP ID:4030275376 CHNL:SNB Payment Systems VAT CLEARANCE 2022 3RD,,111391765,,0,1125,47576.27,48326.26999999999,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار لك بترولي,,104686510,,0,10000,73326.27,58326.26999999999,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار بترولي الامانة,,104678632,,0,15000,63326.27,73326.26999999999,,0
+0,Loan payment,16000473916401,,100446080,YE,27758.05,0,45568.22,45568.219999999987,,0
+0,SADAD Payment,153-EJAR-10068558848,سكن برجر لك ولي العهد,111864200,SD,2500,0,58101.78,43068.219999999987,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Petroly,,108700610,,0,11000,60601.78,54068.219999999987,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Rent khulais,,108678848,,0,9000,49601.78,63068.219999999987,,0
+0,Loan payment,16000473916401,,100317704,YE,4966.44,0,40601.78,58101.779999999977,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems 1001-daff+1000,,110741111,,0,12871,70972.78,70972.779999999984,,0
+0,Incoming internal transfer,شراء بضاعة 75500002078206 DEP ID:4030550072 CHNL:SNB Payment Systems Salary July,,110020495,,0,9880,95852.78,80852.779999999984,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems إيجار بترولي,,108184901,,0,15000,85972.78,95852.779999999984,,0
+0,Outgoing internal transfer,مصاريف تشغيل 12754601000105 BEN ID:1051803060 إيجار فرع الفروسية,,109100783,,33000,0,72852.78,62852.779999999977,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Loan Payment,,107333926,,0,10000,105852.78,72852.779999999984,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems Rent safwa,,109422461,,0,15000,97052.78,87852.779999999984,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Loan Payment,,109395817,,0,9200,82052.78,97052.779999999984,,0
+0,SADAD Payment,177-Ministry of Municipal and Rural Affairs-25498591552,,110564328,SD,1000,0,91552.78,96052.779999999984,,0
+0,SADAD Payment,177-Ministry of Municipal and Rural Affairs-25827670084,,110555367,SD,2000,0,92552.78,94052.779999999984,,0
+0,SADAD Payment,177-Ministry of Municipal and Rural Affairs-25999156376,,110546295,SD,2000,0,94552.78,92052.779999999984,,0
+0,SADAD Payment,177-Ministry of Municipal and Rural Affairs-25065159990,,110535948,SD,500,0,96552.78,91552.779999999984,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Walil Ahad Room Rent,,108391524,,0,2500,164052.78,94052.779999999984,,0
+0,Incoming internal transfer,01400015438910 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Furusiya,,108381612,,0,33000,161552.78,127052.78,,0
+0,Incoming internal transfer,14600000742403 DEP ID:4030275376 CHNL:SNB Payment Systems Rent Safwa,,108339466,,0,37000,128552.78,164052.78,,0
+0,SADAD Payment,050-Ministry of Human Resources and Social Development-70460934449596    AMANA FORKAN FINE,,114947038,SD,37100,0,26947.03,126952.78,,0
+0,Outgoing internal transfer,مصاريف تشغيل 13551137000109 BEN ID:1041544220 BABUL MIAH,,115334403,,250,0,24011.02,24011.019999999971
+0,Outgoing internal transfer,مصاريف تشغيل 13551137000109 BEN ID:1041544220 MUHAMMED RINSHAD MANJALA,,115390074,,250,0,21174.02,21174.019999999971
+0,Outgoing internal transfer,مصاريف تشغيل 13551137000109 BEN ID:1041544220 محمد عادل قائد صالح,,115565585,,250,0,9824.02,9824.019999999975
+"""
+
+print("Snippet rows loaded.")

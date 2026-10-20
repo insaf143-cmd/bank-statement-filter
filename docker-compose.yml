@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  bank-statement-filter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: bank_statement_filter_app
+    ports:
+      - "8501:8501"
+    restart: unless-stopped
+    volumes:
+      - ./config:/app/config
+    environment:
+      - STREAMLIT_SERVER_MAX_UPLOAD_SIZE=500

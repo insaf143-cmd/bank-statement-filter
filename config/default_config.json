@@ -1,0 +1,463 @@
+{
+  "bank_accounts": [
+    {
+      "account_number": "14600000742403",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA14600000742403",
+      "nickname": "Main Branch Account 146"
+    },
+    {
+      "account_number": "75500002092900",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA75500002092900",
+      "nickname": "Branch Account 755-929"
+    },
+    {
+      "account_number": "75500002073803",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA75500002073803",
+      "nickname": "SADAD & Payments Account 755-738"
+    },
+    {
+      "account_number": "13551137000109",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA13551137000109",
+      "nickname": "Operations & Internal Transfer 135"
+    },
+    {
+      "account_number": "13300000291206",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA13300000291206",
+      "nickname": "Corporate Account 133"
+    },
+    {
+      "account_number": "20754004000107",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA20754004000107",
+      "nickname": "Branch Operations 207"
+    },
+    {
+      "account_number": "15563956000100",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA15563956000100",
+      "nickname": "Operations Sharqiya 155"
+    },
+    {
+      "account_number": "14571236000108",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA14571236000108",
+      "nickname": "Monthly Payroll Account 145"
+    },
+    {
+      "account_number": "01400000495305",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA01400000495305",
+      "nickname": "Loan & Tax Account 014"
+    },
+    {
+      "account_number": "16000473916401",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA16000473916401",
+      "nickname": "Loan Account 160"
+    },
+    {
+      "account_number": "01400012696005",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA01400012696005",
+      "nickname": "VAT & Operations 014-6005"
+    },
+    {
+      "account_number": "16947535000106",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA16947535000106",
+      "nickname": "Financial Support Account 169"
+    },
+    {
+      "account_number": "13570890000100",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA13570890000100",
+      "nickname": "Operations & GOSI 135-0100"
+    },
+    {
+      "account_number": "00400001377104",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA00400001377104",
+      "nickname": "Operations 004"
+    },
+    {
+      "account_number": "01349759000108",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA01349759000108",
+      "nickname": "Rent & Operations 013"
+    },
+    {
+      "account_number": "12754601000105",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA12754601000105",
+      "nickname": "Furusiya Branch 127"
+    },
+    {
+      "account_number": "45500001258406",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA45500001258406",
+      "nickname": "Purchasing 455"
+    },
+    {
+      "account_number": "11255397000110",
+      "bank_name": "SNB - AlAhli",
+      "iban": "SA11255397000110",
+      "nickname": "Monthly Salaries 112"
+    },
+    {
+      "account_number": "1002345678901",
+      "bank_name": "Al Rajhi Bank",
+      "iban": "SA03800001002345678901",
+      "nickname": "Main Operating Account"
+    },
+    {
+      "account_number": "2009876543210",
+      "bank_name": "SNB Treasury",
+      "iban": "SA441000002009876543210",
+      "nickname": "Treasury Account"
+    },
+    {
+      "account_number": "3001122334455",
+      "bank_name": "Riyad Bank",
+      "iban": "SA6820000003001122334455",
+      "nickname": "Payroll Account"
+    },
+    {
+      "account_number": "4005566778899",
+      "bank_name": "Alinma Bank",
+      "iban": "SA190500004005566778899",
+      "nickname": "Reserve Account"
+    }
+  ],
+  "employees": [
+    {
+      "emp_id": "1001",
+      "name_ar": "محمد عبدالله العتيبي",
+      "name_en": "Mohammed Abdullah Al-Otaibi",
+      "national_id": "1087654321"
+    },
+    {
+      "emp_id": "1002",
+      "name_ar": "أحمد علي الغامدي",
+      "name_en": "Ahmed Ali Al-Ghamdi",
+      "national_id": "1098765432"
+    },
+    {
+      "emp_id": "1003",
+      "name_ar": "خالد عمر الحربي",
+      "name_en": "Khalid Omar Al-Harbi",
+      "national_id": "2345678901"
+    },
+    {
+      "emp_id": "1004",
+      "name_ar": "سارة فهد الشهري",
+      "name_en": "Sarah Fahad Al-Shehri",
+      "national_id": "1076543210"
+    },
+    {
+      "emp_id": "1005",
+      "name_ar": "محمد عادل قائد صالح",
+      "name_en": "Mohamed Adel Qayed Saleh",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1006",
+      "name_ar": "عمر عادل احمد صالح قايد",
+      "name_en": "Omar Adel Ahmed Saleh Qayed",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1007",
+      "name_ar": "عبدالرحمن عادل احمد صالح",
+      "name_en": "Abdulrahman Adel Ahmed Saleh",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1008",
+      "name_ar": "سليمان صادق صالح الجماعي",
+      "name_en": "Sulaiman Sadiq Saleh Al-Jomai",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1009",
+      "name_ar": "نجم الدين صادق علي قاسم",
+      "name_en": "Najmuddin Sadiq Ali Qasim",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1010",
+      "name_ar": "احمد حمدى محمد احمد",
+      "name_en": "Ahmed Hamdy Mohamed Ahmed",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1011",
+      "name_ar": "محمد عبدالحميد سالم سالم",
+      "name_en": "Mohamed Abdulhamid Salem Salem",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1012",
+      "name_ar": "عمار عدنان سعيد علي علي",
+      "name_en": "Ammar Adnan Saeed Ali Ali",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1013",
+      "name_ar": "خالد محمد خالد الحطامي",
+      "name_en": "Khalid Mohammed Khalid Al-Hetami",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1014",
+      "name_ar": "ضياء مختار مهيوب محمد قا",
+      "name_en": "Diaa Mokhtar Mahyoub Mohamed",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1015",
+      "name_ar": "ابراهيم السيد حسب النبى",
+      "name_en": "Ibrahim El-Sayed Hasab El-Naby",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1016",
+      "name_ar": "محمد ابراهيم محمد ابو اس",
+      "name_en": "Mohamed Ibrahim Mohamed Abu",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1017",
+      "name_ar": "حسين علي نعمان محمد نورا",
+      "name_en": "Hussein Ali Noaman Mohamed",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1018",
+      "name_ar": "هيثم قاسم محمد قاسم الثم",
+      "name_en": "Haitham Qasim Mohamed Qasim",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1019",
+      "name_ar": "علي محمد علي حزام العوام",
+      "name_en": "Ali Mohamed Ali Hezam Al-Awam",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1020",
+      "name_ar": "شادى عبد اللطيف محمد الش",
+      "name_en": "Shady Abdel Latif Mohamed",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1021",
+      "name_ar": "محمد سماره يوسف عطوه",
+      "name_en": "Mohamed Samara Yousef Atwa",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1022",
+      "name_ar": "سامي ناصر صالح حسن السلا",
+      "name_en": "Sami Nasser Saleh Hassan",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1023",
+      "name_ar": "ابراهيم عبد الهادى عبد ا",
+      "name_en": "Ibrahim Abdel Hady",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1024",
+      "name_ar": "وحيد السيد محمد شعبان",
+      "name_en": "Waheed El-Sayed Mohamed Shaaban",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1025",
+      "name_ar": "فارس محمد حسن الشرفي",
+      "name_en": "Faris Mohamed Hassan Al-Sharafi",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1026",
+      "name_ar": "صدام حسين حمود العوامي",
+      "name_en": "Saddam Hussein Hammoud Al-Awami",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1027",
+      "name_ar": "اشرف محمد سيف عبدالله",
+      "name_en": "Ashraf Mohamed Seif Abdullah",
+      "national_id": ""
+    }
+  ],
+  "salary_keywords": [
+    "salary",
+    "salaries",
+    "payroll",
+    "payroll transfer",
+    "wages",
+    "wps",
+    "wps salary",
+    "staff salary",
+    "salary payable",
+    "salary cash",
+    "monthly salary",
+    "سلفة الرواتب",
+    "رواتب شهرية",
+    "رواتب",
+    "راتب",
+    "مسير رواتب",
+    "مسيرات رواتب",
+    "تحويل رواتب",
+    "أجور",
+    "حماية الأجور"
+  ],
+  "sadad_billers": [
+    {
+      "code": "153",
+      "name": "EJAR / Rental Services (منصة إيجار)",
+      "ledger": "5401 - Rent Expense / Rent Payable"
+    },
+    {
+      "code": "002",
+      "name": "Saudi Electricity Company (SEC)",
+      "ledger": "5102 - Utilities: Electricity Expense"
+    },
+    {
+      "code": "020",
+      "name": "ZATCA (Zakat, Tax & Customs Authority)",
+      "ledger": "2105 - VAT & Tax Payable"
+    },
+    {
+      "code": "044",
+      "name": "ZATCA / Tax Authority",
+      "ledger": "2105 - VAT & Tax Payable"
+    },
+    {
+      "code": "050",
+      "name": "Ministry of HRSD / Qiwa (Iqama & Work)",
+      "ledger": "5201 - Government Fees: Iqama & Visas"
+    },
+    {
+      "code": "060",
+      "name": "GOSI (Social Insurance / التأمينات الاجتماعية)",
+      "ledger": "5301 - Social Insurance Expense (GOSI)"
+    },
+    {
+      "code": "090",
+      "name": "MOI / Absher (Passports, Visas, Iqama)",
+      "ledger": "5201 - Government Fees: Iqama & Visas"
+    },
+    {
+      "code": "177",
+      "name": "Ministry of Municipal & Rural Affairs (Balady)",
+      "ledger": "5203 - Municipality Licenses & Fees"
+    },
+    {
+      "code": "028",
+      "name": "Ministry of Commerce / CR Renewal",
+      "ledger": "5204 - Commercial Registration Fees"
+    },
+    {
+      "code": "130",
+      "name": "Bupa Arabia (Medical Insurance)",
+      "ledger": "5206 - Medical Insurance Expense"
+    },
+    {
+      "code": "001",
+      "name": "STC / Telecom",
+      "ledger": "5101 - Utilities: Telecom & Internet"
+    },
+    {
+      "code": "005",
+      "name": "Mobily / Telecom",
+      "ledger": "5101 - Utilities: Telecom & Internet"
+    },
+    {
+      "code": "085",
+      "name": "ELM Company (Muqeem / Tawtheeq)",
+      "ledger": "5202 - Government Services: ELM"
+    },
+    {
+      "code": "093",
+      "name": "Traffic Fines & Penalties (مخالفات)",
+      "ledger": "5207 - Fines & Penalties"
+    },
+    {
+      "code": "199",
+      "name": "Takamol Holding",
+      "ledger": "5202 - Government Services: Takamol"
+    },
+    {
+      "code": "279",
+      "name": "Saudi Center for Economic Business (المركز السعودي للأعمال)",
+      "ledger": "5205 - Saudi Business Center Fees"
+    },
+    {
+      "code": "368",
+      "name": "Municipal Service Fees",
+      "ledger": "5203 - Municipal Fees"
+    },
+    {
+      "code": "903",
+      "name": "Edaa / Vehicle Insurance",
+      "ledger": "5208 - Vehicle Insurance Expense"
+    }
+  ],
+  "rent_config": {
+    "keywords": [
+      "153-ejar",
+      "153-",
+      "rent",
+      "lease",
+      "tenancy",
+      "ejar",
+      "ejari",
+      "room rent",
+      "shop rent",
+      "rent payable",
+      "إيجار",
+      "ايجار",
+      "اجار",
+      "إيجارات",
+      "ايجارات",
+      "عقار",
+      "عقارات",
+      "منصة إيجار",
+      "عقد إيجار",
+      "سداد إيجار",
+      "سداد أيجار",
+      "دفعة إيجار",
+      "سكن",
+      "سكن ولي العهد",
+      "سكن برجر"
+    ],
+    "contract_numbers": [
+      "20552214394",
+      "20635897877",
+      "10068558848",
+      "20227572488",
+      "20797515762",
+      "20161934452",
+      "20251329963",
+      "10053726695",
+      "10088022822",
+      "20327922746",
+      "20105551299",
+      "20390848813",
+      "10254056421",
+      "20940840240",
+      "20072042706",
+      "EJ-987456",
+      "CONT-2026-089"
+    ],
+    "default_ledger": "5401 - Rent Expense / Rent Payable"
+  }
+}
