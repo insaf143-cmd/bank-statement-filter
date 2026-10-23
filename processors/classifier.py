@@ -54,16 +54,50 @@ def classify_transaction(
         }
 
     # ---------------------------------------------------------
-    # RULE 0.5: BANK FEES, VAT ON FEES, LOAN PAYMENTS
+    # RULE 0.5: POS COMMISSION, BANK FEES, LOAN PAYMENTS
     # ---------------------------------------------------------
-    if any(bf in norm_text for bf in ['transfer fees', 'vat charge', 'رسوم تحويل', 'ضريبة رسوم', 'transfer fee', 'bank charges', 'عمولة بنكية']):
+    # POS Commission debits (e.g. Al Rajhi "POS- Retailer Dr. Time:...")
+    if 'pos- retailer dr' in norm_text:
         return {
-            'category': 'Bank Charges & Fees',
+            'category': 'POS Commission & Fees',
+            'is_interbank': False,
+            'matched_bank': '',
+            'matched_account': '',
+            'allocated_ledger': '5104 - Bank Charges & Commission',
+            'rule_applied': 'POS Commission'
+        }
+
+    # Bank charges, IPS fees, Sarie fees, transfer fees, VAT on fees
+    bank_fee_keywords = [
+        'transfer fees', 'vat charge', 'رسوم تحويل', 'ضريبة رسوم', 'transfer fee',
+        'bank charges', 'عمولة بنكية', 'transaction charges', 'payment fees',
+        'domestic sarie payment fees', 'outward ips credit transaction charges',
+        'عمولة', 'رسوم عمليات'
+    ]
+    if any(bf in norm_text for bf in bank_fee_keywords):
+        tag = 'Bank Charges & Fees'
+        if 'ips' in norm_text:
+            tag = 'Bank Charges: IPS Transfer Fees'
+        elif 'sarie' in norm_text:
+            tag = 'Bank Charges: Sarie Payment Fees'
+        return {
+            'category': tag,
             'is_interbank': False,
             'matched_bank': '',
             'matched_account': '',
             'allocated_ledger': '5104 - Bank Charges & Commission',
             'rule_applied': 'Bank Charges'
+        }
+
+    # POS Daily Card Settlements (e.g. Al Rajhi "POS- Retailer Cr. Time:...")
+    if 'pos- retailer cr' in norm_text or 'pos settlement' in norm_text or 'تسوية نقاط بيع' in norm_text:
+        return {
+            'category': 'POS Sales: Card Settlement',
+            'is_interbank': False,
+            'matched_bank': '',
+            'matched_account': '',
+            'allocated_ledger': '4101 - POS Sales & Card Revenue',
+            'rule_applied': 'POS Card Settlement'
         }
 
     if 'loan payment' in norm_text or 'سداد قرض' in norm_text or 'قسط قرض' in norm_text:
@@ -206,8 +240,8 @@ def classify_transaction(
     sadad_billers = config.get('sadad_billers', [])
     has_sadad_word = any(w in norm_text for w in ['sadad', 'سداد', 'فاتورة', 'biller', 'government payment'])
 
-    # Check 3-digit biller code prefix in SADAD Payment (e.g. "002-", "050-", "090-", "177-")
-    code_match = re.search(r'\b(\d{3})-([A-Za-z0-9]+)', combined_text)
+    # Check 3-digit biller code prefix in SADAD Payment (e.g. "E#060-", "#060-", "002-", "050-", "090-", "177-")
+    code_match = re.search(r'(?:E#|#|\b)(\d{3})-([A-Za-z0-9]+)', combined_text)
     if code_match:
         extracted_code = code_match.group(1)
         for biller in sadad_billers:
@@ -232,13 +266,14 @@ def classify_transaction(
             if re.search(r'\b' + re.escape(code) + r'\b', combined_text):
                 biller_matched = True
 
-        if not biller_matched and biller_name:
+        if not biller_matched and biller_name and has_sadad_word:
             norm_b_name = normalize_arabic(biller_name).lower()
             generic_words = [
                 'the', 'and', 'for', 'company', 'fees', 'fee', 'service', 'services',
                 'payment', 'payments', 'bill', 'bills', 'charges', 'charge', 'tax',
                 'ministry', 'authority', 'center', 'national', 'saudi', 'general',
-                'organization', 'holding', 'social', 'department', 'exp', 'expense'
+                'organization', 'holding', 'social', 'department', 'exp', 'expense',
+                'اعمال', 'الاعمال'
             ]
             tokens = [t for t in re.split(r'[/, -]+', norm_b_name) if len(t) >= 3 and t not in generic_words]
             for token in tokens:
@@ -326,6 +361,64 @@ def classify_transaction(
                 'allocated_ledger': "5001 - Salaries & Wages Expense",
                 'rule_applied': 'Payroll Keyword'
             }
+
+    # ---------------------------------------------------------
+    # RULE 5: VENDOR / SUPPLIER TRANSFERS (DEBITS)
+    # ---------------------------------------------------------
+    if debit_amt > 0 and (
+        'beneficiary:' in combined_text.lower() or 
+        'toacct/' in combined_text.upper() or 
+        'sarie payment order' in norm_text or 
+        'outward ips credit' in norm_text or
+        any(tw in norm_text for tw in ['transfer', 'تحويل'])
+    ):
+        beneficiary_name = ""
+        # 1. Look for Beneficiary: tag
+        ben_m = re.search(r'Beneficiary:\s*([^\*]+)', combined_text, re.IGNORECASE)
+        if ben_m:
+            beneficiary_name = ben_m.group(1).strip()
+        # 2. Look for TOACCT/...TO <Name>
+        if not beneficiary_name:
+            to_m = re.search(r'TOACCT/\d+TO\s*([^-\*]+)', combined_text, re.IGNORECASE)
+            if to_m:
+                beneficiary_name = to_m.group(1).strip()
+
+        # Clean beneficiary name of trailing artifacts or dashes
+        beneficiary_name = re.sub(r'[\*\-_]+$', '', beneficiary_name).strip()
+
+        category_tag = f"Supplier Payment: {beneficiary_name}" if beneficiary_name else "Supplier Payment"
+        return {
+            'category': category_tag,
+            'is_interbank': False,
+            'matched_bank': '',
+            'matched_account': '',
+            'allocated_ledger': "2102 - Accounts Payable / Suppliers",
+            'rule_applied': 'Supplier Transfer'
+        }
+
+    # ---------------------------------------------------------
+    # RULE 6: INCOMING TRANSFERS / CUSTOMER RECEIPTS (CREDITS)
+    # ---------------------------------------------------------
+    if credit_amt > 0 and (
+        'fracct/' in combined_text.upper() or 
+        'incoming transfer' in norm_text or 
+        any(tw in norm_text for tw in ['transfer', 'تحويل'])
+    ):
+        sender_name = ""
+        fr_m = re.search(r'FRACCT/\d+FR\s*([^-\*]+)', combined_text, re.IGNORECASE)
+        if fr_m:
+            sender_name = fr_m.group(1).strip()
+        sender_name = re.sub(r'[\*\-_]+$', '', sender_name).strip()
+
+        category_tag = f"Incoming Transfer: {sender_name}" if sender_name else "Customer Receipts / Inward Transfer"
+        return {
+            'category': category_tag,
+            'is_interbank': False,
+            'matched_bank': '',
+            'matched_account': '',
+            'allocated_ledger': "4102 - Customer Receipts / Sales Revenue",
+            'rule_applied': 'Customer Receipt'
+        }
 
     # ---------------------------------------------------------
     # UNCLASSIFIED / GENERAL

@@ -131,6 +131,12 @@
       "bank_name": "Alinma Bank",
       "iban": "SA190500004005566778899",
       "nickname": "Reserve Account"
+    },
+    {
+      "account_number": "156608010841676",
+      "bank_name": "Al Rajhi Bank",
+      "iban": "SA9280000156608010841676",
+      "nickname": "SNAA COMPNI Main Account"
     }
   ],
   "employees": [
@@ -295,6 +301,36 @@
       "name_ar": "اشرف محمد سيف عبدالله",
       "name_en": "Ashraf Mohamed Seif Abdullah",
       "national_id": ""
+    },
+    {
+      "emp_id": "1028",
+      "name_ar": "احمد",
+      "name_en": "Ahmed",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1029",
+      "name_ar": "عماد",
+      "name_en": "Emad",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1030",
+      "name_ar": "ماراكار",
+      "name_en": "Marakar",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1031",
+      "name_ar": "مصري بالمال",
+      "name_en": "Misri palmal",
+      "national_id": ""
+    },
+    {
+      "emp_id": "1032",
+      "name_ar": "ايبس فيروس",
+      "name_en": "Iibs feros",
+      "national_id": ""
     }
   ],
   "salary_keywords": [
@@ -437,7 +473,10 @@
       "دفعة إيجار",
       "سكن",
       "سكن ولي العهد",
-      "سكن برجر"
+      "سكن برجر",
+      "مزايا الاولى للعقار",
+      "مزايا للعقار",
+      "للعقار"
     ],
     "contract_numbers": [
       "20552214394",

@@ -146,6 +146,8 @@ def is_date_column_candidate(series: pd.Series) -> bool:
 
     return (date_like_count / len(sample)) >= 0.5
 
+EXCLUDE_DATE_COLUMNS = ['debit', 'credit', 'balance', 'amount', 'total', 'مدين', 'دائن', 'الرصيد', 'المبلغ', 'sum', 'ledger', 'category', 'remarks', 'reference']
+
 def standardize_all_dates(df: pd.DataFrame) -> pd.DataFrame:
     """Ensures all date columns across the entire statement are cleanly formatted as YYYY-MM-DD."""
     df_clean = df.copy()
@@ -153,6 +155,8 @@ def standardize_all_dates(df: pd.DataFrame) -> pd.DataFrame:
 
     for col in df_clean.columns:
         col_str = str(col).lower()
+        if any(ex in col_str for ex in EXCLUDE_DATE_COLUMNS):
+            continue
         should_clean = any(dk in col_str for dk in date_keywords) or is_date_column_candidate(df_clean[col])
         if should_clean:
             df_clean[col] = df_clean[col].apply(clean_date)

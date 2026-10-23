@@ -185,3 +185,38 @@ def partial_or_full_match(target: str, query: str, full_match_only: bool = False
         return norm_query == norm_target
     else:
         return norm_query in norm_target
+
+def fix_arabic_pdf_text(s: str) -> str:
+    """
+    Normalizes Unicode presentation forms (e.g. ﺔﻛﺮﺷ -> شركة) and corrects
+    reversed visual Arabic text commonly extracted from PDF documents.
+    """
+    if not isinstance(s, str) or not s:
+        return ""
+
+    # Check if string has Arabic presentation forms (Forms-A or Forms-B)
+    has_pres_forms = bool(re.search(r'[\uFB50-\uFDFF\uFE70-\uFEFC]', s))
+
+    def fix_arabic_segment(m):
+        seg = m.group(0)
+        # Reverse the visually reversed Arabic glyphs and normalize to standard Arabic
+        return unicodedata.normalize('NFKC', seg[::-1])
+
+    if has_pres_forms:
+        # Match contiguous Arabic / presentation form character segments
+        fixed = re.sub(r'[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFC]+(?:\s+[\u0600-\u06FF\uFB50-\uFDFF\uFE70-\uFEFC]+)*', fix_arabic_segment, s)
+        return unicodedata.normalize('NFKC', fixed).strip()
+
+    # Normal Arabic text - check if letters or words are reversed
+    s_norm = unicodedata.normalize('NFKC', s)
+    words = s_norm.split()
+    looks_reversed = any(
+        w.startswith('ة') or w.endswith('لا') or 'ةكرش' in w or 'عرف' in w or 'دادس' in w or (len(w) >= 3 and w.startswith('د') and w.endswith('ا'))
+        for w in words if re.search(r'[\u0600-\u06FF]', w)
+    )
+
+    if looks_reversed:
+        fixed = re.sub(r'[\u0600-\u06FF]+(?:\s+[\u0600-\u06FF]+)*', lambda m: m.group(0)[::-1], s_norm)
+        return unicodedata.normalize('NFKC', fixed).strip()
+
+    return s_norm.strip()
